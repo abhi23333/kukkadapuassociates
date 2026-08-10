@@ -55,7 +55,7 @@ export function SiteHeader() {
             sizes="220px"
             className={cn(
               'w-auto object-contain mix-blend-multiply transition-[height] duration-500 ease-out',
-              scrolled ? 'h-12 sm:h-14' : 'h-14 sm:h-16',
+              scrolled ? 'h-16 sm:h-20' : 'h-20 sm:h-24',
             )}
           />
         </a>
