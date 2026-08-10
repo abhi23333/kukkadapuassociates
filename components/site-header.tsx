@@ -19,13 +19,16 @@ export function SiteHeader() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
+
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
+
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
+
     return () => {
       document.body.style.overflow = ''
     }
@@ -40,12 +43,9 @@ export function SiteHeader() {
           : 'border-b border-transparent bg-transparent py-6',
       )}
     >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 md:px-10">
-        <a
-          href="#top"
-          aria-label="Kukkadapu Associates — home"
-          className="inline-flex items-center transition-opacity hover:opacity-70"
-        >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
+        {/* Logo */}
+        <a href="/" className="flex items-center">
           <Image
             src="/images/kukkadapu-logo-v2.png"
             alt="Kukkadapu Associates"
@@ -55,11 +55,12 @@ export function SiteHeader() {
             sizes="220px"
             className={cn(
               'w-auto object-contain mix-blend-multiply transition-[height] duration-500 ease-out',
-              scrolled ? 'h-10 sm:h-11' : 'h-12 sm:h-14',
+              scrolled ? 'h-12 sm:h-14' : 'h-14 sm:h-16',
             )}
           />
         </a>
 
+        {/* Desktop Navigation */}
         <nav
           aria-label="Primary"
           className="hidden items-center gap-9 lg:flex"
@@ -76,6 +77,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
+        {/* Right Side */}
         <div className="flex items-center gap-4">
           <a
             href="#opportunities"
@@ -84,6 +86,7 @@ export function SiteHeader() {
             Explore Opportunities
           </a>
 
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -91,12 +94,16 @@ export function SiteHeader() {
             aria-expanded={open}
             className="inline-flex h-10 w-10 items-center justify-center text-foreground lg:hidden"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {open ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <div
         className={cn(
           'fixed inset-0 top-0 z-40 flex flex-col bg-background px-6 pt-24 transition-[opacity,transform] duration-500 ease-out lg:hidden',
@@ -118,10 +125,11 @@ export function SiteHeader() {
             </a>
           ))}
         </nav>
+
         <a
           href="#opportunities"
           onClick={() => setOpen(false)}
-          className="mt-10 inline-flex items-center justify-center border border-foreground px-6 py-4 font-sans text-[0.78rem] font-medium uppercase tracking-[0.18em] text-background bg-foreground"
+          className="mt-10 inline-flex items-center justify-center border border-foreground bg-foreground px-6 py-4 font-sans text-[0.78rem] font-medium uppercase tracking-[0.18em] text-background"
         >
           Explore Opportunities
         </a>
