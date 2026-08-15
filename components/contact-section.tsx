@@ -29,7 +29,8 @@ const DETAILS: {
   },
   {
     label: 'Location',
-    value: 'Kukkadapu Enclave, Miryalaguda — 508207\nNalgonda District, Telangana, India',
+    value:
+      'Kukkadapu Enclave, Miryalaguda — 508207\nNalgonda District, Telangana, India',
   },
 ]
 
@@ -66,10 +67,59 @@ const FIELDS = [
 
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+
+    setLoading(true)
+    setError('')
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
+
+    if (!accessKey) {
+      setError(
+        'The contact form is not configured correctly. Please email us directly.'
+      )
+      setLoading(false)
+      return
+    }
+
+    formData.append('access_key', accessKey)
+    formData.append('from_name', 'Kukkadapu Associates Website')
+
+    try {
+      const response = await fetch(
+        'https://api.web3forms.com/submit',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      )
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitted(true)
+        form.reset()
+      } else {
+        setError(
+          'Something went wrong while sending your enquiry. Please try again or email us directly.'
+        )
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+
+      setError(
+        'Unable to send your enquiry right now. Please try again or email us directly.'
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -79,17 +129,19 @@ export function ContactSection() {
     >
       <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-36">
         <div className="grid gap-14 md:grid-cols-12 md:gap-16">
-          {/* Left: heading + details */}
+
           <div className="md:col-span-5">
             <Reveal>
               <SectionLabel>07 — Contact</SectionLabel>
             </Reveal>
+
             <Reveal delay={100}>
               <h2 className="mt-7 font-serif text-4xl font-light leading-[1.06] tracking-[-0.015em] text-balance sm:text-5xl md:text-6xl">
                 Let&apos;s build what comes{' '}
                 <span className="italic">next.</span>
               </h2>
             </Reveal>
+
             <Reveal delay={160}>
               <p className="mt-7 max-w-md font-sans text-base font-light leading-relaxed text-foreground/65">
                 Kukkadapu Associates welcomes conversations with entrepreneurs,
@@ -108,6 +160,7 @@ export function ContactSection() {
                     <dt className="font-sans text-[0.68rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                       {d.label}
                     </dt>
+
                     <dd className="font-sans text-sm font-light text-foreground/80">
                       {d.href ? (
                         <a
@@ -137,7 +190,6 @@ export function ContactSection() {
             </Reveal>
           </div>
 
-          {/* Right: form */}
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={150}>
               {submitted ? (
@@ -148,12 +200,18 @@ export function ContactSection() {
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/50 text-gold">
                     <Check className="h-5 w-5" />
                   </span>
+
                   <p className="mt-6 font-serif text-2xl font-light">
                     Thank you for reaching out.
                   </p>
+
                   <p className="mt-3 max-w-sm font-sans text-sm font-light leading-relaxed text-foreground/60">
-                    Your enquiry has been noted. Please also feel free to reach
-                    us directly at{' '}
+                    Your enquiry has been received successfully. We will get
+                    back to you soon.
+                  </p>
+
+                  <p className="mt-3 max-w-sm font-sans text-sm font-light leading-relaxed text-foreground/60">
+                    You can also reach us directly at{' '}
                     <a
                       href="mailto:info@kukkadapuassociates.com"
                       className="text-foreground underline underline-offset-4"
@@ -164,7 +222,8 @@ export function ContactSection() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-8" noValidate>
+                <form onSubmit={handleSubmit} className="space-y-8">
+
                   {FIELDS.map((field) => (
                     <div key={field.name}>
                       <label
@@ -173,6 +232,7 @@ export function ContactSection() {
                       >
                         {field.label}
                       </label>
+
                       <input
                         id={field.name}
                         name={field.name}
@@ -191,6 +251,7 @@ export function ContactSection() {
                     >
                       Message
                     </label>
+
                     <textarea
                       id="message"
                       name="message"
@@ -200,17 +261,29 @@ export function ContactSection() {
                     />
                   </div>
 
+                  {error && (
+                    <p
+                      role="alert"
+                      className="font-sans text-sm text-red-600"
+                    >
+                      {error}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-3 bg-foreground px-8 py-4 font-sans text-[0.8rem] font-medium uppercase tracking-[0.16em] text-background transition-opacity duration-300 hover:opacity-90"
+                    disabled={loading}
+                    className="group inline-flex items-center gap-3 bg-foreground px-8 py-4 font-sans text-[0.8rem] font-medium uppercase tracking-[0.16em] text-background transition-opacity duration-300 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    Send Enquiry
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    {loading ? 'Sending...' : 'Send Enquiry'}
+
+                    {!loading && (
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    )}
                   </button>
 
                   <p className="font-sans text-xs font-light leading-relaxed text-muted-foreground">
-                    This form is not yet connected to a delivery system. For a
-                    guaranteed response, please write to us directly at{' '}
+                    Your enquiry will be sent to{' '}
                     <a
                       href="mailto:info@kukkadapuassociates.com"
                       className="text-foreground/80 underline underline-offset-4"
@@ -219,10 +292,12 @@ export function ContactSection() {
                     </a>
                     .
                   </p>
+
                 </form>
               )}
             </Reveal>
           </div>
+
         </div>
       </div>
     </section>
