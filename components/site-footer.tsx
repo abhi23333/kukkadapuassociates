@@ -22,8 +22,7 @@ export function SiteFooter() {
               className="h-auto w-52 object-contain mix-blend-multiply sm:w-60 md:w-64"
             />
             <p className="mt-6 max-w-md font-sans text-sm font-light leading-relaxed text-foreground/55">
-              Building businesses. Exploring opportunities. Creating long-term
-              value.
+              Building businesses. Exploring opportunities. Creating long-term value.
             </p>
           </div>
 
