@@ -30,7 +30,7 @@ const DETAILS: {
   {
     label: 'Location',
     value:
-      'Kukkadapu Enclave, Miryalaguda — 508207\nNalgonda District, Telangana, India',
+      'Kukkadapu Enclave, Miryalaguda - 508207\nNalgonda District, Telangana, India',
   },
 ]
 
