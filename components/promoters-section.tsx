@@ -37,6 +37,8 @@ const PROMOTERS: Promoter[] = [
         </p>
       </>
     ),
+    quote:
+      'Start Unknown, Finish Unforgettable.',
   },
   {
     name: 'Shri Kukkadapu Abhivadan',
