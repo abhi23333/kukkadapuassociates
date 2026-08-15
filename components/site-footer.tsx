@@ -56,7 +56,7 @@ export function SiteFooter() {
                   href="mailto:info@kukkadapuassociates.com"
                   className="transition-colors hover:text-foreground"
                 >
-                  info@kukkadapuassociates.com
+                  info@kukkadapuassociates.online
                 </a>
               </p>
               <p>
