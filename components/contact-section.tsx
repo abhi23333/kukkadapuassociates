@@ -13,8 +13,8 @@ const DETAILS: {
 }[] = [
   {
     label: 'Email',
-    value: 'info@kukkadapuassociates.com',
-    href: 'mailto:info@kukkadapuassociates.com',
+    value: 'info@kukkadapuassociates.online',
+    href: 'mailto:info@kukkadapuassociates.online',
   },
   {
     label: 'Mobile',
@@ -213,7 +213,7 @@ export function ContactSection() {
                   <p className="mt-3 max-w-sm font-sans text-sm font-light leading-relaxed text-foreground/60">
                     You can also reach us directly at{' '}
                     <a
-                      href="mailto:info@kukkadapuassociates.com"
+                      href="mailto:info@kukkadapuassociates.online"
                       className="text-foreground underline underline-offset-4"
                     >
                       info@kukkadapuassociates.com
@@ -288,7 +288,7 @@ export function ContactSection() {
                       href="mailto:info@kukkadapuassociates.com"
                       className="text-foreground/80 underline underline-offset-4"
                     >
-                      info@kukkadapuassociates.com
+                      info@kukkadapuassociates.online
                     </a>
                     .
                   </p>
