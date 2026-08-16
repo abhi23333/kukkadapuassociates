@@ -17,123 +17,202 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
+  // Header scroll effect
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24)
+    }
 
     onScroll()
+
     window.addEventListener('scroll', onScroll, { passive: true })
 
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
+  // Lock page scrolling while mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
 
     return () => {
       document.body.style.overflow = ''
     }
   }, [open])
 
+  // Close menu if user tries to scroll
+  useEffect(() => {
+    if (!open) return
+
+    const closeMenuOnScroll = () => {
+      setOpen(false)
+    }
+
+    window.addEventListener('scroll', closeMenuOnScroll, {
+      passive: true,
+      once: true,
+    })
+
+    return () => {
+      window.removeEventListener('scroll', closeMenuOnScroll)
+    }
+  }, [open])
+
+  // Close menu when resizing to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1280) {
+        setOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  // Close menu with Escape
+  useEffect(() => {
+    if (!open) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [open])
+
   return (
-    <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color,padding] duration-500 ease-out',
-        scrolled
-          ? 'border-b border-border/70 bg-background/85 py-4 backdrop-blur-md'
-          : 'border-b border-transparent bg-transparent py-6',
-      )}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <a href="/" className="flex items-center">
-          <Image
-            src="/images/kukkadapu-logo-v2.png"
-            alt="Kukkadapu Associates"
-            width={1710}
-            height={960}
-            priority
-            sizes="220px"
-            className={cn(
-              'w-auto object-contain mix-blend-multiply transition-[height] duration-500 ease-out',
-              scrolled ? 'h-12 sm:h-16' : 'h-16 sm:h-20',
-            )}
-          />
-        </a>
+    <>
+      {/* Header */}
+      <header
+        className={cn(
+          'fixed inset-x-0 top-0 z-[100] transition-all duration-300 ease-out',
+          scrolled
+            ? 'border-b border-border/70 bg-background/90 py-3 backdrop-blur-md'
+            : 'border-b border-transparent bg-background/20 py-4 backdrop-blur-sm',
+        )}
+      >
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
+          <a
+            href="/"
+            aria-label="Kukkadapu Associates home"
+            className="relative z-[110] flex shrink-0 items-center"
+            onClick={() => setOpen(false)}
+          >
+            <Image
+              src="/images/kukkadapu-logo-v2.png"
+              alt="Kukkadapu Associates"
+              width={1710}
+              height={960}
+              priority
+              sizes="220px"
+              className={cn(
+                'w-auto object-contain mix-blend-multiply transition-[height] duration-300 ease-out',
+                scrolled
+                  ? 'h-12 sm:h-14 md:h-16'
+                  : 'h-14 sm:h-16 md:h-20',
+              )}
+            />
+          </a>
 
-        {/* Desktop Navigation */}
-        <nav
-          aria-label="Primary"
-          className="hidden items-center gap-9 lg:flex"
-        >
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="group relative font-sans text-[0.82rem] font-normal tracking-wide text-foreground/75 transition-colors hover:text-foreground"
-            >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold transition-all duration-300 ease-out group-hover:w-full" />
-            </a>
-          ))}
-        </nav>
+          {/* Desktop Navigation */}
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-6 xl:flex"
+          >
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="group relative whitespace-nowrap font-sans text-[0.78rem] font-normal tracking-wide text-foreground/75 transition-colors duration-200 hover:text-foreground"
+              >
+                {link.label}
 
-        {/* Right Side */}
-        <div className="flex items-center gap-4">
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold transition-all duration-300 ease-out group-hover:w-full" />
+              </a>
+            ))}
+          </nav>
+
+          {/* Desktop CTA */}
           <a
             href="#opportunities"
-            className="hidden items-center border border-foreground/25 px-5 py-2.5 font-sans text-[0.75rem] font-medium uppercase tracking-[0.16em] text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background md:inline-flex"
+            className="ml-auto mr-4 hidden items-center whitespace-nowrap border border-foreground/25 px-4 py-2.5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.14em] text-foreground transition-colors duration-200 hover:border-foreground hover:bg-foreground hover:text-background xl:inline-flex"
           >
             Explore Opportunities
           </a>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile / Tablet Menu Button */}
           <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            onClick={() => setOpen((value) => !value)}
+            aria-label={
+              open ? 'Close navigation menu' : 'Open navigation menu'
+            }
             aria-expanded={open}
-            className="inline-flex h-10 w-10 items-center justify-center text-foreground lg:hidden"
+            aria-controls="mobile-navigation"
+            className={cn(
+              'relative z-[110] inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-foreground/20 bg-background/70 text-foreground backdrop-blur-sm transition-colors duration-200 hover:bg-background xl:hidden',
+              open && 'border-foreground bg-background',
+            )}
           >
             {open ? (
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" strokeWidth={1.5} />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" strokeWidth={1.5} />
             )}
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile / Tablet Navigation */}
       <div
+        id="mobile-navigation"
+        aria-hidden={!open}
         className={cn(
-          'fixed inset-0 top-0 z-40 flex flex-col bg-background px-6 pt-24 transition-[opacity,transform] duration-500 ease-out lg:hidden',
+          'fixed inset-0 z-[90] bg-background transition-[opacity,visibility] duration-300 xl:hidden',
           open
-            ? 'pointer-events-auto translate-y-0 opacity-100'
-            : 'pointer-events-none -translate-y-4 opacity-0',
+            ? 'visible opacity-100'
+            : 'invisible pointer-events-none opacity-0',
         )}
       >
-        <nav aria-label="Mobile" className="flex flex-col gap-2">
-          {NAV_LINKS.map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="border-b border-border/60 py-5 font-serif text-2xl font-light text-foreground"
-              style={{ transitionDelay: `${i * 40}ms` }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        <div className="flex h-full flex-col overflow-y-auto px-6 pb-10 pt-28 sm:px-10 sm:pt-32">
+          <nav aria-label="Mobile navigation" className="flex flex-col">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="border-b border-border/60 py-5 font-serif text-2xl font-light text-foreground transition-opacity duration-200 hover:opacity-60 sm:py-6 sm:text-3xl"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        <a
-          href="#opportunities"
-          onClick={() => setOpen(false)}
-          className="mt-10 inline-flex items-center justify-center border border-foreground bg-foreground px-6 py-4 font-sans text-[0.78rem] font-medium uppercase tracking-[0.18em] text-background"
-        >
-          Explore Opportunities
-        </a>
+          <a
+            href="#opportunities"
+            onClick={() => setOpen(false)}
+            className="mt-10 inline-flex w-full items-center justify-center border border-foreground bg-foreground px-6 py-4 font-sans text-[0.72rem] font-medium uppercase tracking-[0.16em] text-background transition-opacity duration-200 hover:opacity-90 sm:w-auto"
+          >
+            Explore Opportunities
+          </a>
+        </div>
       </div>
-    </header>
+    </>
   )
 }
