@@ -43,7 +43,7 @@ export function SiteHeader() {
           : 'border-b border-transparent bg-transparent py-6',
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <a href="/" className="flex items-center">
           <Image
@@ -55,7 +55,7 @@ export function SiteHeader() {
             sizes="220px"
             className={cn(
               'w-auto object-contain mix-blend-multiply transition-[height] duration-500 ease-out',
-              scrolled ? 'h-16 sm:h-20' : 'h-20 sm:h-24',
+              scrolled ? 'h-12 sm:h-16' : 'h-16 sm:h-20',
             )}
           />
         </a>
