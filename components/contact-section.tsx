@@ -216,7 +216,7 @@ export function ContactSection() {
                       href="mailto:info@kukkadapuassociates.online"
                       className="text-foreground underline underline-offset-4"
                     >
-                      info@kukkadapuassociates.com
+                      info@kukkadapuassociates.online
                     </a>
                     .
                   </p>
