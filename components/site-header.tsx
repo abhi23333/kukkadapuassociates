@@ -17,7 +17,6 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
-  // Header scroll effect
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 24)
@@ -32,38 +31,34 @@ export function SiteHeader() {
     }
   }, [])
 
-  // Lock page scrolling while mobile menu is open
+  // Prevent the page behind the mobile menu from scrolling.
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = open ? 'hidden' : ''
 
     return () => {
       document.body.style.overflow = ''
     }
   }, [open])
 
-  // Close menu if user tries to scroll
+  // Close mobile menu when the user scrolls.
   useEffect(() => {
     if (!open) return
 
-    const closeMenuOnScroll = () => {
+    const closeMenu = () => {
       setOpen(false)
     }
 
-    window.addEventListener('scroll', closeMenuOnScroll, {
+    window.addEventListener('scroll', closeMenu, {
       passive: true,
       once: true,
     })
 
     return () => {
-      window.removeEventListener('scroll', closeMenuOnScroll)
+      window.removeEventListener('scroll', closeMenu)
     }
   }, [open])
 
-  // Close menu when resizing to desktop
+  // Close mobile menu when moving to desktop.
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1280) {
@@ -78,7 +73,7 @@ export function SiteHeader() {
     }
   }, [])
 
-  // Close menu with Escape
+  // Close mobile menu with Escape.
   useEffect(() => {
     if (!open) return
 
@@ -106,7 +101,7 @@ export function SiteHeader() {
             : 'border-b border-transparent bg-background/20 py-4 backdrop-blur-sm',
         )}
       >
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <a
             href="/"
@@ -133,7 +128,7 @@ export function SiteHeader() {
           {/* Desktop Navigation */}
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-6 xl:flex"
+            className="ml-auto hidden items-center gap-6 xl:flex"
           >
             {NAV_LINKS.map((link) => (
               <a
@@ -151,7 +146,7 @@ export function SiteHeader() {
           {/* Desktop CTA */}
           <a
             href="#opportunities"
-            className="ml-auto mr-4 hidden items-center whitespace-nowrap border border-foreground/25 px-4 py-2.5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.14em] text-foreground transition-colors duration-200 hover:border-foreground hover:bg-foreground hover:text-background xl:inline-flex"
+            className="ml-8 hidden shrink-0 items-center whitespace-nowrap border border-foreground/25 px-4 py-2.5 font-sans text-[0.7rem] font-medium uppercase tracking-[0.14em] text-foreground transition-colors duration-200 hover:border-foreground hover:bg-foreground hover:text-background xl:inline-flex"
           >
             Explore Opportunities
           </a>
@@ -166,7 +161,7 @@ export function SiteHeader() {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             className={cn(
-              'relative z-[110] inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-foreground/20 bg-background/70 text-foreground backdrop-blur-sm transition-colors duration-200 hover:bg-background xl:hidden',
+              'relative z-[110] ml-auto inline-flex h-11 w-11 shrink-0 items-center justify-center border border-foreground/20 bg-background/70 text-foreground backdrop-blur-sm transition-colors duration-200 hover:bg-background xl:hidden',
               open && 'border-foreground bg-background',
             )}
           >
