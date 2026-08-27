@@ -1,25 +1,10 @@
-'use client'
-
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 
 export default function Loading() {
-  const [visible, setVisible] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false)
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (!visible) return null
-
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
-      <div className="relative flex items-center justify-center">
-        <div className="absolute h-[230px] w-[230px] animate-spin rounded-full border-[2px] border-foreground/10 border-t-gold" />
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-background">
+      <div className="relative flex h-[240px] w-[240px] items-center justify-center">
+        <div className="absolute inset-0 animate-spin rounded-full border-2 border-foreground/10 border-t-gold" />
 
         <Image
           src="/images/kukkadapu-logo-v2.png"
@@ -27,7 +12,7 @@ export default function Loading() {
           width={300}
           height={170}
           priority
-          className="relative h-auto w-[180px] object-contain"
+          className="h-auto w-[180px] object-contain"
         />
       </div>
     </div>
