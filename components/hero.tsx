@@ -24,15 +24,6 @@ export function Hero() {
       </div>
 
       <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 md:px-10">
-        <Reveal delay={100}>
-          <span className="inline-flex max-w-full items-center gap-2 font-sans text-[0.62rem] font-medium uppercase tracking-[0.2em] text-muted-foreground sm:gap-3 sm:text-[0.7rem] sm:tracking-[0.28em]">
-            <span aria-hidden className="h-px w-6 shrink-0 bg-gold/70 sm:w-8" />
-            <span>
-              An Entrepreneurial Business Enterprise · India
-            </span>
-          </span>
-        </Reveal>
-
         <h1 className="mt-6 max-w-5xl font-serif text-[2.35rem] font-light leading-[1.04] tracking-[-0.015em] text-balance sm:mt-8 sm:text-6xl md:text-7xl lg:text-[5.5rem]">
           <Reveal as="span" className="block" delay={150}>
             Building businesses.
