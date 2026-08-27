@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="loading-screen">
       <div className="loading-logo">
         <Image
-          src="/icon.png"
+          src="/icon.svg"
           alt="Kukkadapu Associates"
           width={180}
           height={180}
