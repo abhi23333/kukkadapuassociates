@@ -11,36 +11,6 @@ type Promoter = {
 
 const PROMOTERS: Promoter[] = [
   {
-    name: 'Shri Kukkadapu Maruthi',
-    image: '/images/promoter-maruthi.jpeg',
-    bio: (
-      <>
-        <p>
-          Shri Kukkadapu Maruthi brings nearly three and a half decades of
-          entrepreneurial and business experience across diverse ventures and
-          commercial activities.
-        </p>
-        <p>
-          Over the course of his journey, he has developed a practical
-          understanding of business, relationships, markets and the importance
-          of building enterprises with resilience and integrity. His experience
-          has been shaped through years of hands-on involvement in business,
-          navigating changing circumstances and identifying opportunities
-          across different areas.
-        </p>
-        <p>
-          His approach is grounded in experience, perseverance, relationships
-          and long-term thinking. As a promoter of Kukkadapu Associates, he
-          provides the foundation of practical business knowledge and
-          entrepreneurial experience upon which the organization seeks to build
-          its next chapter.
-        </p>
-      </>
-    ),
-    quote:
-      'Start Unknown, Finish Unforgettable.',
-  },
-  {
     name: 'Shri Kukkadapu Abhivadan',
     image: '/images/promoter-abhivadan.jpeg',
     bio: (
@@ -67,7 +37,7 @@ const PROMOTERS: Promoter[] = [
       </>
     ),
     quote:
-      'Respect the experience of the past. Learn from it. Build for what comes next.',
+      'Start Unknown, Finish Unforgettable.',
   },
 ]
 
