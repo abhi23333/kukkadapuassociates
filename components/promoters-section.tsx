@@ -54,6 +54,7 @@ export function PromotersSection() {
           <Reveal>
             <SectionLabel>Our Promoters</SectionLabel>
           </Reveal>
+
           <Reveal delay={100}>
             <p className="mt-7 font-serif text-2xl font-light italic leading-[1.3] tracking-[-0.01em] text-balance text-foreground/85 sm:text-3xl">
               Experience rooted in enterprise. Ambition shaped for the future.
@@ -95,7 +96,11 @@ export function PromotersSection() {
                 </div>
 
                 {p.quote && (
-                  <blockquote className="mt-8 border-l border-gold/60 pl-5 text-left font-serif text-lg font-light italic leading-relaxed text-foreground/85">
+                  <blockquote className="mt-8 text-center font-serif text-lg font-light italic leading-relaxed text-foreground/85">
+                    <span
+                      aria-hidden
+                      className="mx-auto mb-4 block h-px w-12 bg-gold/60"
+                    />
                     &ldquo;{p.quote}&rdquo;
                   </blockquote>
                 )}
