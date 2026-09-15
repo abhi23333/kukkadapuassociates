@@ -1,11 +1,12 @@
 import Image from 'next/image'
+import type { ReactNode } from 'react'
 import { Reveal } from '@/components/reveal'
 import { SectionLabel } from '@/components/section-heading'
 
 type Promoter = {
   name: string
   image: string
-  bio: React.ReactNode
+  bio: ReactNode
   quote?: string
 }
 
