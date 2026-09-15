@@ -1,4 +1,3 @@
-import { IntroLoader } from '@/components/ui/intro-loader'
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
@@ -96,7 +95,6 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} bg-background`}
     >
       <body className="font-sans antialiased">
-        <IntroLoader />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
